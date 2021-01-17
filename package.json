@@ -20,7 +20,8 @@
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
     "mongoose": "^5.11.12",
-    "mongoose-geojson-schema": "^2.1.5"
+    "mongoose-geojson-schema": "^2.1.5",
+    "open-location-code": "^1.0.3"
   },
   "engines": {
     "node": "10.x"

@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const unionSchema = new Schema(
   {
-    geometry: mongoose.Schema.Types.MultiPolygon,
+    geometry: mongoose.Schema.Types.Point,
     properties: {
-      id: String,
+      Un_UID: String,
       Divi_name: String,
       Dist_name: String,
       Upaz_name: String,
@@ -14,9 +14,9 @@ const unionSchema = new Schema(
       Area_SqKm: Number,
     },
   },
-  { collection: "unionbounds" }
+  { collection: "unions" }
 );
 
-const union = mongoose.model("Union", unionSchema);
+const unionsingle = mongoose.model("UnionSingle", unionSchema);
 
-module.exports = union;
+module.exports = unionsingle;
