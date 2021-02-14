@@ -2,7 +2,7 @@ const { model } = require("mongoose");
 const books = require("./models/books.js");
 const union = require("./models/union.js");
 const unionsingle = require("./models/unionSingle.js");
-const track = require("./models/track.js");
+const Track = require("./models/track.js");
 const book = require("./models/bookParent.js");
 const ol = require("../node_modules/open-location-code/openlocationcode.js");
 
@@ -13,22 +13,17 @@ const ol = require("../node_modules/open-location-code/openlocationcode.js");
  */
 
 async function createTrack(parent, args, contex, info) {
-  console.log(args);
-  let geo = new track(args);
+  try {
+    console.log(args.data);
+    if (!args.data.points || args.data.points.length == 0) return { _id: null };
 
-  console.log(geo);
-
-  let toReturN = null;
-  await geo.save((err) => {
-    if (err) {
-      console.log(err);
-
-      toReturN = { created: false };
-    }
-
-    toReturN = { created: true };
-  });
-  return toReturN;
+    const track = new Track(args.data);
+    let trackDb = await track.save();
+    return { _id: trackDb._id };
+  } catch (err) {
+    console.log(err);
+    return { _id: null };
+  }
 }
 
 /** Test funciton
@@ -121,7 +116,7 @@ async function getNearestArea(args, callback) {
 
 const resolvers = {
   Mutation: {
-    createTrack: async (parent, args, context, info) =>
+    createTrack: (parent, args, context, info) =>
       createTrack(parent, args, context, info),
   },
   Query: {

@@ -13,12 +13,7 @@ const typeDefs = `
   }
 
   type Mutation { 
-    createTrack ( user: String,
-      avgSpeedInKMH: Float,
-      distanceInMeters: Float,
-      points: [Float],
-      timeInMillis: Int,
-      timestamp: Int):CreateResponse
+    createTrack ( data: TrackData):CreateResponse
 
 
     login(email: String): User
@@ -26,7 +21,7 @@ const typeDefs = `
   }
 
   type CreateResponse{
-    created: Boolean!
+    _id: String
   }
 
   type PlusCode{
@@ -41,14 +36,16 @@ const typeDefs = `
     email: String!
   }
 
-  type trackData  {
+  input TrackData  {
     user: String,
     avgSpeedInKMH: Float,
     distanceInMeters: Float,
-    points: [Float],
+    points: [[Float]],
     timeInMillis: Int,
     timestamp: Int,
   }
+
+
 
   type Props{
     Un_UID: String

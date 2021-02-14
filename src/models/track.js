@@ -6,7 +6,7 @@ const trackSchema = new Schema(
     user: String,
     avgSpeedInKMH: Number,
     distanceInMeters: Number,
-    points: [Number],
+    points: [[Number]],
     timeInMillis: Number,
     timestamp: Number,
   },
