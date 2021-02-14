@@ -8,6 +8,18 @@ const ol = require("../node_modules/open-location-code/openlocationcode.js");
 
 // The resolvers
 
+async function getTracks() {
+  console.log("trying to get Tracks");
+  try {
+    let tracks = await Track.find({});
+
+    return tracks;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 /**
  * Create a track
  */
@@ -120,6 +132,7 @@ const resolvers = {
       createTrack(parent, args, context, info),
   },
   Query: {
+    tracks: () => getTracks(),
     data: getData(),
 
     rgeocode: (parent, args, contex, info) =>

@@ -8,8 +8,7 @@ const typeDefs = `
     nearest(lat: Float, lng:Float):Union
     getPlusCode(lat: Float, lng:Float):PlusCode
     getReverse(code: String!, union:String, district: String):[Float]
-
-
+    tracks:[Track]
   }
 
   type Mutation { 
@@ -44,6 +43,16 @@ const typeDefs = `
     timeInMillis: Int,
     timestamp: Int,
   }
+
+  type Track{
+    user: String,
+    avgSpeedInKMH: Float,
+    distanceInMeters: Float,
+    points: [[Float]],
+    timeInMillis: Int,
+    timestamp: Int,
+  }
+
 
 
 
