@@ -3,20 +3,51 @@
 const union = require("./models/union.js");
 const typeDefs = `
   type Query {
-    books: [Book]
     data: Union
-    book: SingleBook
     rgeocode(lat: Float, lng:Float):Union
     nearest(lat: Float, lng:Float):Union
     getPlusCode(lat: Float, lng:Float):PlusCode
     getReverse(code: String!, union:String, district: String):[Float]
+
+
   }
+
+  type Mutation { 
+    createTrack ( user: String,
+      avgSpeedInKMH: Float,
+      distanceInMeters: Float,
+      points: [Float],
+      timeInMillis: Int,
+      timestamp: Int):CreateResponse
+
+
+    login(email: String): User
+        
+  }
+
+  type CreateResponse{
+    created: Boolean!
+  }
+
   type PlusCode{
       full:String!
       short:String
   }
   type Union {
     properties: Props
+  }
+
+  type User{
+    email: String!
+  }
+
+  type trackData  {
+    user: String,
+    avgSpeedInKMH: Float,
+    distanceInMeters: Float,
+    points: [Float],
+    timeInMillis: Int,
+    timestamp: Int,
   }
 
   type Props{
@@ -30,18 +61,7 @@ const typeDefs = `
   }
 
 
-  type SingleBook{
-      chapter: Chapter
-  }
 
-  type Chapter{
-      first_chapter: Int
-  }
-
-
-  type Book {
-    title: String  
-  }
 
 `;
 

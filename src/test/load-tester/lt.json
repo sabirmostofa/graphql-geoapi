@@ -1,0 +1,15 @@
+{
+    "config":{
+        "url": "http://localhost:3001/graphql",
+        "name": "get quereies",
+        "queryFile": true,
+        "duration": 10,
+        "arrivalRate":40
+    },
+    "args":{
+        "get":{
+            "lng":"90.2",
+            "lat":"24"
+        } }
+    }
+    

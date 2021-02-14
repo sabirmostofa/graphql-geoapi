@@ -2,10 +2,52 @@ const { model } = require("mongoose");
 const books = require("./models/books.js");
 const union = require("./models/union.js");
 const unionsingle = require("./models/unionSingle.js");
+const track = require("./models/track.js");
 const book = require("./models/bookParent.js");
 const ol = require("../node_modules/open-location-code/openlocationcode.js");
 
 // The resolvers
+
+/**
+ * Create a track
+ */
+
+async function createTrack(parent, args, contex, info) {}
+
+/** Test funciton
+ *
+ */
+async function getData() {
+  var value;
+  await union.findOne(
+    {
+      geometry: {
+        $geoIntersects: {
+          $geometry: {
+            type: "Point",
+            coordinates: [90, 22],
+          },
+        },
+      },
+    },
+    "properties",
+    function (err, result) {
+      value = result;
+    }
+  );
+  return value;
+}
+
+async function getReverseGeoCode(parent, args, contex, info) {
+  return getNearestArea(args);
+}
+/**
+ * Take
+ *
+ * @param {*} union
+ * @param {*} district
+ * @param {*} callback
+ */
 
 function getPlaceLatLng(union, district, callback) {
   console.log(union, district);
@@ -21,6 +63,12 @@ function getPlaceLatLng(union, district, callback) {
     }
   );
 }
+
+/**
+ *
+ * @param {*} args
+ * @param {*} callback
+ */
 
 async function getNearestArea(args, callback) {
   var toReturn;
@@ -54,34 +102,16 @@ async function getNearestArea(args, callback) {
 }
 
 const resolvers = {
+  Mutation: {
+    createTrack: (parent, args, context, info) =>
+      createTrack(parent, args, contex, info),
+  },
   Query: {
-    data: async () => {
-      var value;
-      await union.findOne(
-        {
-          geometry: {
-            $geoIntersects: {
-              $geometry: {
-                type: "Point",
-                coordinates: [90, 22],
-              },
-            },
-          },
-        },
-        "properties",
-        function (err, result) {
-          value = result;
-        }
-      );
-      return value;
-    },
+    data: getData(),
 
-    books: () => books,
+    rgeocode: (parent, args, contex, info) =>
+      getReverseGeoCode(parent, args, contex, info),
 
-    book: () => book,
-    async rgeocode(parent, args, contex, info) {
-      return getNearestArea(args);
-    },
     async getPlusCode(parent, args, contex, info) {
       toReturn = {};
       toReturn = await getNearestArea(args).then((uni) => {
