@@ -12,9 +12,27 @@ const ol = require("../node_modules/open-location-code/openlocationcode.js");
  * Create a track
  */
 
-async function createTrack(parent, args, contex, info) {}
+async function createTrack(parent, args, contex, info) {
+  console.log(args);
+  let geo = new track(args);
+
+  console.log(geo);
+
+  let toReturN = null;
+  await geo.save((err) => {
+    if (err) {
+      console.log(err);
+
+      toReturN = { created: false };
+    }
+
+    toReturN = { created: true };
+  });
+  return toReturN;
+}
 
 /** Test funciton
+ *
  *
  */
 async function getData() {
@@ -103,8 +121,8 @@ async function getNearestArea(args, callback) {
 
 const resolvers = {
   Mutation: {
-    createTrack: (parent, args, context, info) =>
-      createTrack(parent, args, contex, info),
+    createTrack: async (parent, args, context, info) =>
+      createTrack(parent, args, context, info),
   },
   Query: {
     data: getData(),
